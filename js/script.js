@@ -31,7 +31,13 @@ function validadeCep(cep) {
 const generateCep = (cepValidated) => fetch(getCep(cepValidated))
     .then(response => response.json())
     .then(data => {
-        if(data == "") {
+        if(data.erro == true) {
+            document.getElementById("aviso")
+                .innerText = 'CPF inválido'
+        } else {
+            document.getElementById("aviso")
+                .innerText = 'Infome o CEP sem (-) e letras'
+
             document.getElementById('uf')
                 .innerText = data.uf ? data.uf : ""
             document.getElementById('localidade')
@@ -44,9 +50,6 @@ const generateCep = (cepValidated) => fetch(getCep(cepValidated))
                 .innerText = data.logradouro ? data.logradouro : ""
             document.getElementById('ddd')
                 .innerText = data.ddd ? data.ddd : ""
-        } else {
-            document.getElementById("aviso")
-            .innerText = 'CPF inválido'
         }
     })
     .catch(() => {
